@@ -60,7 +60,7 @@ The following table show the mapping between instruments and sounds.
 | #  | Topic |
 | --- | --- |
 |Question | How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? |
-| | ![image](images/architecture_diagram.png) |
+| | ![image](images/Architecture_Diagram.png) |
 |Question | Who is going to **send UDP datagrams** and **when**? |
 | | The musician app every seconds. |
 |Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received? |
