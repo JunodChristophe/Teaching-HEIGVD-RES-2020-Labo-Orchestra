@@ -66,10 +66,9 @@ The following table show the mapping between instruments and sounds.
 |Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received? |
 | | The auditor app and it allows it to keep track of which musician is active. |
 |Question | What **payload** should we put in the UDP datagrams? |
-| | An unique UUID, The "sound" of the instrument and the date to which we send the data. |
+| | An unique UUID, The "sound" of the instrument. |
 |Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures? |
-| | An uuid, the sound (for the sender) or the name of the instrument (for the receiver) and the date at which the data is send. 
-The sender update every seconds and the receiver give the last musicians active from the last 5 seconds through the TCP connection. |
+| | An uuid, the sound (for the sender) or the name of the instrument (for the receiver) and the date at which the data is send. The sender update every seconds and the receiver give the last musicians active from the last 5 seconds through the TCP connection. |
 
 
 ## Task 2: implement a "musician" Node.js application
@@ -77,21 +76,21 @@ The sender update every seconds and the receiver give the last musicians active 
 | #  | Topic |
 | ---  | --- |
 |Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**? |
-| | *Enter your response here...*  |
+| | By using the method JSON.stringify(object)  |
 |Question | What is **npm**?  |
-| | *Enter your response here...*  |
+| | **npm** is the package manager for the Node javaScript platform.  |
 |Question | What is the `npm install` command and what is the purpose of the `--save` flag?  |
-| | *Enter your response here...*  |
+| | **npm install** adds a modules to use for a Node program. The **-- save** flag adds the module under **dependencies** in **package.json**. |
 |Question | How can we use the `https://www.npmjs.com/` web site?  |
-| | *Enter your response here...*  |
+| | **npmjs.com** works similarly to github and docker, were you can explore and share package made by the community |
 |Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122? |
-| | *Enter your response here...*  |
+| | **UUIDs (Universally Unique IDentifier)** can be generated with the npm module **uuid** and it's already compliant with RFC4122.  |
 |Question | In Node.js, how can we execute a function on a **periodic** basis? |
-| | *Enter your response here...*  |
+| | By using the method **setInterval(action, time_in_ms)**  |
 |Question | In Node.js, how can we **emit UDP datagrams**? |
-| | *Enter your response here...*  |
+| | By using the npm package **dgram**. Call the method **createSocket()** and **send()** |
 |Question | In Node.js, how can we **access the command line arguments**? |
-| | *Enter your response here...*  |
+| | By using **process.argv.slice(index)**. Or using the npm package **command-line-args** |
 
 
 ## Task 3: package the "musician" app in a Docker image
