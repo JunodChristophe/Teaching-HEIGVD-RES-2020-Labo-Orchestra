@@ -68,8 +68,7 @@ The following table show the mapping between instruments and sounds.
 |Question | What **payload** should we put in the UDP datagrams? |
 | | An unique UUID, The "sound" of the instrument and the date to which we send the data. |
 |Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures? |
-| | An uuid, the sound (for the sender) or the name of the instrument (for the receiver) and the date at which the data is send. 
-The sender update every seconds and the receiver give the last musicians active from the last 5 seconds through the TCP connection. |
+| | An uuid, the sound (for the sender) or the name of the instrument (for the receiver) and the date at which the data is send. The sender update every seconds and the receiver give the last musicians active from the last 5 seconds through the TCP connection. |
 
 
 ## Task 2: implement a "musician" Node.js application
