@@ -4,26 +4,26 @@
 
 RES laboratory about UDP
 The lab objectives are:
-* **Design and implement a simple application protocol on top of UDP**. Some applications multicast events and another listen to and process them.
+* **Design and implement a simple application protocol over UDP**. A group of applications multicast events and a application listens to and processes them.
 * Getting familiar with several tools from **the JavaScript ecosystem**. By implementing two simple **Node.js** applications. (One for the senders and one for the receiver.)
-* Practicing with **Docker**.
+* Practice with **Docker**.
 
 ## Requirements
 
-Each NodeJS applications are packaged in Docker images:
-* the first app, **Musician**, simulates someone who plays an instrument in an orchestra. 
-When the app is started, it is assigned an instrument (piano, flute, etc.). 
+Each NodeJS applications is packaged in Docker images:
+* The first app, **Musician**, simulates someone playing an instrument in an orchestra. 
+When the app is launched, an instrument is assigned to it (piano, flute, etc.). 
 Every second it will emit a sound (a string) through UDP communication protocol.
 The sound depends on the instrument.
-* the second app, **Auditor**, simulates someone who listens to the orchestra.
-This application has two responsibilities. Firstly, it must listen to Musicians and keep track of **active** musicians.
-A musician is active if it has played a sound during the last 5 seconds.
-Secondly, it implement a very simple TCP-based protocol to indicate which musician is active.
-* a third application exist to validate how the architecture works through the script validate.sh.
+* The second app, **Auditor**, simulates someone listening to the orchestra.
+This application has two responsibilities. First, it must listen to Musicians and keep track of **active** musicians.
+A musician is active if he has played a sound during the last 5 seconds.
+Second, it implements a very simple TCP-based protocol to indicate which musician is active.
+* A third application exists to validate the fonctionning of the architecture via the **validate.sh** script.
 
 ### Instruments and sounds
 
-The following table show the mapping between instruments and sounds.
+The following table shows the mapping between instruments and sounds.
 
 | Instrument | Sound         |
 |------------|---------------|
@@ -36,8 +36,8 @@ The following table show the mapping between instruments and sounds.
 
 ### TCP-based protocol to be implemented by the Auditor application
 
-* The auditor include a TCP server and accept connection requests on port 2205.
-* After accepting a connection request, the auditor send a JSON payload containing the list of <u>active</u> musicians, with the following format :
+* The auditor includes a TCP server and accepts connection requests on port 2205.
+* After accepting a connection request, the auditor sends a JSON payload containing the list of <u>active</u> musicians, in the following format :
 
 ```
 [
@@ -64,11 +64,11 @@ The following table show the mapping between instruments and sounds.
 |Question | Who is going to **send UDP datagrams** and **when**? |
 | | The musician app every seconds. |
 |Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received? |
-| | The auditor app and it allows it to keep track of which musician is active. |
+| | The auditor app and it lets it keep track of which musician is active. |
 |Question | What **payload** should we put in the UDP datagrams? |
-| | An unique UUID, The "sound" of the instrument. |
+| | An unique UUID and The "sound" of the instrument. |
 |Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures? |
-| | An uuid, the sound (for the sender) or the name of the instrument (for the receiver) and the date at which the data is send. The sender update every seconds and the receiver give the last musicians active from the last 5 seconds through the TCP connection. |
+| | An uuid, the sound (for the sender) or the name of the instrument (for the receiver) and the date at which the data was last send. The sender updates every second and the receiver gives the last active musicians for the last 5 seconds via the TCP connection. |
 
 
 ## Task 2: implement a "musician" Node.js application
@@ -76,21 +76,21 @@ The following table show the mapping between instruments and sounds.
 | #  | Topic |
 | ---  | --- |
 |Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**? |
-| | By using the method JSON.stringify(object)  |
+| | Using **JSON.stringify(object)**  |
 |Question | What is **npm**?  |
 | | **npm** is the package manager for the Node javaScript platform.  |
 |Question | What is the `npm install` command and what is the purpose of the `--save` flag?  |
 | | **npm install** adds a modules to use for a Node program. The **-- save** flag adds the module under **dependencies** in **package.json**. |
-|Question | How can we use the `https://www.npmjs.com/` web site?  |
-| | **npmjs.com** works similarly to github and docker, were you can explore and share package made by the community |
+|Question | How can we use the `https://www.npmjs.com/` web site? |
+| | **npmjs.com** allows you to explore and share community created packages. |
 |Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122? |
-| | **UUIDs (Universally Unique IDentifier)** can be generated with the npm module **uuid** and it's already compliant with RFC4122.  |
+| | **UUIDs (Universally Unique IDentifier)** can be generated with the npm module **uuid** and it's already RFC4122 compliant.  |
 |Question | In Node.js, how can we execute a function on a **periodic** basis? |
-| | By using the method **setInterval(action, time_in_ms)**  |
+| | Using **setInterval(action, time_in_ms)**  |
 |Question | In Node.js, how can we **emit UDP datagrams**? |
-| | By using the npm package **dgram**. Call the method **createSocket()** and **send()** |
+| | By using the npm package **dgram**. Call the **createSocket()** and **send()** method. |
 |Question | In Node.js, how can we **access the command line arguments**? |
-| | By using **process.argv.slice(index)**. Or using the npm package **command-line-args** |
+| | Using **process.argv[index]**. Or using the npm package **command-line-args** |
 
 
 ## Task 3: package the "musician" app in a Docker image
@@ -98,17 +98,17 @@ The following table show the mapping between instruments and sounds.
 | #  | Topic |
 | ---  | --- |
 |Question | How do we **define and build our own Docker image**?|
-| | By creating a dockerfile and use it to modify a base **node** image to add our program to run in it. |
+| | By creating a dockerfile and using it to modify a base **node** image to add our program to run in it. |
 |Question | How can we use the `ENTRYPOINT` statement in our Dockerfile?  |
-| | The instruction **ENTRYPOINT** define the command to run at the launch of the container. We can use it to run the application. |
+| | The instruction **ENTRYPOINT** defines the command to be executed when the container is launched. It is used to run the application. |
 |Question | After building our Docker image, how do we use it to **run containers**?  |
-| | By using the command **docker run** followed by the name of the container and a parameter for the name of the instrument to play. |
+| | Using **docker run** command followed by the container name and a parameter for the name of the instrument to be played. |
 |Question | How do we get the list of all **running containers**?  |
-| | By using the command **docker ps**. |
+| | Using **docker ps** command. |
 |Question | How do we **stop/kill** one running container?  |
-| | By using the command **docker stop/kill** with the name of the container to stop/kill. |
+| | Using **docker stop/kill** command with the name of the container to stop/kill. |
 |Question | How can we check that our running containers are effectively sending UDP datagrams?  |
-| | By using the command **tcpdump** or through wireshark. |
+| | Using **windump** command (to install on Windows) or via wireshark. |
 
 
 ## Task 4: implement an "auditor" Node.js application
@@ -116,15 +116,15 @@ The following table show the mapping between instruments and sounds.
 | #  | Topic |
 | ---  | ---  |
 |Question | With Node.js, how can we listen for UDP datagrams in a multicast group? |
-| | *Enter your response here...*  |
+| | By using **bind** method on the socket and passing the port to listen to. Not specifyng an address allows to listen to anyone. |
 |Question | How can we use the `Map` built-in object introduced in ECMAScript 6 to implement a **dictionary**?  |
-| | *Enter your response here...* |
+| | By associating each instrument with a sound, it is possible to identify what instrument is being played when receiving a sound. |
 |Question | How can we use the `Moment.js` npm module to help us with **date manipulations** and formatting?  |
-| | *Enter your response here...* |
+| | **Moment.js** to manipulate and display date format in javaScript. |
 |Question | When and how do we **get rid of inactive players**?  |
-| | *Enter your response here...* |
+| | When receiving a TCP request, if a sound was received more than 5 seconds ago and has not been repeated, then it's no longer active. |
 |Question | How do I implement a **simple TCP server** in Node.js?  |
-| | *Enter your response here...* |
+| | Using the **net** npm package. |
 
 
 ## Task 5: package the "auditor" app in a Docker image
@@ -132,4 +132,4 @@ The following table show the mapping between instruments and sounds.
 | #  | Topic |
 | ---  | --- |
 |Question | How do we validate that the whole system works, once we have built our Docker image? |
-| | *Enter your response here...* |
+| | By running **validate.sh** script. |
