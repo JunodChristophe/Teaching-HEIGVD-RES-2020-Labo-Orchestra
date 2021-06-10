@@ -32,7 +32,7 @@ var musician = {
 var payload = Buffer.from(JSON.stringify(musician));
 
 function playMusic() {
-	socket.send(payload, 0, payload, PORT, IP_MULTICAST, console.log("Data send : " + payload));
+	socket.send(payload, 0, payload.length, PORT, IP_MULTICAST, console.log("Data send : " + payload));
 }
 
 setInterval(playMusic, INTERVAL);
